@@ -1,0 +1,49 @@
+name: redis
+resource_pools:
+- name: default
+  network: default
+  cloud_properties:
+    instance_type: m3.medium
+    availability_zone: us-east-1c
+jobs:
+- name: redis
+  instances: 1
+  persistent_disk: 10240
+  templates:
+  - {name: redis, release: redis}
+  networks:
+  - name: vip
+    static_ips: [$EIP]
+  - name: default
+  properties:
+    redis:
+      port: 6379
+networks:
+- name: default
+  type: dynamic
+- name: vip
+  type: vip
+cloud_provider:
+  template: {name: cpi, release: bosh-aws-cpi}
+  ssh_tunnel:
+    host: $EIP
+    port: 22
+    user: vcap
+    private_key: $PRIVATE_KEY_PATH
+  registry: &registry
+    username: admin
+    password: admin
+    port: 6901
+    host: localhost
+  # Tells bosh-micro how to contact remote agent
+  mbus: https://nats:nats@$EIP:6868
+  properties:
+    scaleway:
+      token: f8839543-3a7e-4de2-9962-e8906a221645
+    # Tells CPI how agent should listen for requests
+    agent: {mbus: "https://nats:nats@0.0.0.0:6868"}
+    registry: *registry
+    blobstore:
+      provider: local
+      path: /var/vcap/micro_bosh/data/cache
+    ntp: [0.north-america.pool.ntp.org]

@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+require 'yaml'
+require 'ostruct'
+require 'bosh/cpi'
+require 'bundler'
+require 'logger'
+
+Bundler.setup(:default)
+require_relative '../lib/scaleway_cpi'
+
+cpi_config = YAML.load_file(ARGV.shift)
+cloud_config = OpenStruct.new(:logger => Logger.new(STDERR))
+
+Bosh::Clouds::Config.configure(cloud_config)
+
+cpi_log = StringIO.new # Empty on AWS
+
+cpi_lambda = lambda do
+  cloud_properties = cpi_config['cloud_provider']['properties']
+  ScalewayCPI.new(cloud_properties)
+end
+
+cli = Bosh::Cpi::Cli.new(cpi_lambda, cpi_log, STDOUT)
+
+cli.run(ARGF.read)
