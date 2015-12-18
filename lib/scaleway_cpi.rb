@@ -15,6 +15,12 @@ class ScalewayCPI < Bosh::Cloud
     response.status == 200
   end
 
+
+  def reboot_vm(vm_id)
+    response = client.post("/servers/#{vm_id}/action",'{"action":"reboot"}')
+    response.status == 202
+  end
+
   private
 
   def client
