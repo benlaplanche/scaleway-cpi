@@ -1,5 +1,34 @@
 {
-    "method": "reboot_vm",
-    "arguments": ["02b00d56-e5ce-4707-9fd0-ac17b1c38993"],
-    "context": { "director_uuid":"fefb87c8-38d1-46a5-4552-9749d6b1195c" }
+    "method": "create_vm",
+    "arguments": [
+        "4149ba0f-38d9-4485-476f-1581be36f290",
+        "e3b86aa2-68ea-4c18-9941-b6378f07edc5", {
+            "instance_type": "m1.small"
+        }, {
+            "private": {
+                "type": "manual",
+                "netmask": "255.255.255.0",
+                "gateway": "10.230.13.1",
+                "ip": "10.230.13.6",
+                "default": ["dns", "gateway"],
+                "cloud_properties": {
+                    "net_id": "subnet-48rt54"
+                }
+            },
+            "private2": {
+                "type": "dynamic",
+                "cloud_properties": {
+                    "net_id": "subnet-e12364"
+                }
+            },
+            "public": {
+                "type": "vip",
+                "ip": "173.101.112.104",
+                "cloud_properties": {}
+            }
+        }
+    ],
+    "context": {
+        "director_uuid": "fefb87c8-38d1-46a5-4552-9749d6b1195c"
+    }
 }
