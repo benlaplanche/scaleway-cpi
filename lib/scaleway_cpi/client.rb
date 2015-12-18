@@ -11,10 +11,14 @@ class ScalewayCPI::Client
   end
 
   def get(path)
+    puts @connection.inspect
+
     @connection.get do |req|
       req.headers['X-Auth-Token'] = @token
 
-      req.url "/#{path}"
+      req.url "#{path}"
+
+      puts @req
     end
   end
 end

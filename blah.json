@@ -1,0 +1,5 @@
+{
+    "method": "has_vm",
+    "arguments": ["02b00d56-e5ce-4707-9fd0-ac17b1c38993"],
+    "context": { "director_uuid":"fefb87c8-38d1-46a5-4552-9749d6b1195c" }
+}

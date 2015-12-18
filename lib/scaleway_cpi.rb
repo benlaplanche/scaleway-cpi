@@ -10,6 +10,11 @@ class ScalewayCPI < Bosh::Cloud
     @scaleway_options = options.fetch('scaleway')
   end
 
+  def has_vm?(vm_id)
+    response = client.get("/servers/#{vm_id}")
+    response.status == 200
+  end
+
   private
 
   def client
