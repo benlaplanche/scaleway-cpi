@@ -40,6 +40,8 @@ cloud_provider:
   properties:
     scaleway:
       token: f8839543-3a7e-4de2-9962-e8906a221645
+      organization: 1a99c3be-6277-4691-90a2-90a97a898ba7 
+      stemcell: e3b86aa2-68ea-4c18-9941-b6378f07edc5
     # Tells CPI how agent should listen for requests
     agent: {mbus: "https://nats:nats@0.0.0.0:6868"}
     registry: *registry
